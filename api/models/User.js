@@ -8,7 +8,15 @@
 module.exports = {
 
   attributes: {
-
+  	username:{
+  		type:'string'
+  	},
+  	password:{
+  		type:'string'
+  	},
+  	owner:{
+  		model:'userGroup'
+  	}
   }
 };
 

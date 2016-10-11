@@ -42,7 +42,7 @@ module.exports.connections = {
   ***************************************************************************/
   upnowMysqlServer: {
     adapter: 'sails-mysql',
-    host: 'upnow',
+    host: 'localhost',
     user: 'upnow', //optional
     password: 'upnow', //optional
     database: 'upnow' //optional

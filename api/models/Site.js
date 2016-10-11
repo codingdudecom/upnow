@@ -8,7 +8,13 @@
 module.exports = {
 
   attributes: {
+  	url:{
+  		type:'string'
+  	},
 
+  	owner:{
+  		model:'userGroup'
+  	}
   }
 };
 
