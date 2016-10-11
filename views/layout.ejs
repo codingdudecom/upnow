@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="upnowApp">
   <head>
     <title><%=typeof title == 'undefined' ? 'New Sails App' : title%></title>
 
@@ -30,6 +30,7 @@
 
     <!--STYLES-->
     <link rel="stylesheet" href="/styles/importer.css">
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
     <!--STYLES END-->
   </head>
 
@@ -89,6 +90,10 @@
 
     <!--SCRIPTS-->
     <script src="/js/dependencies/sails.io.js"></script>
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/js/upnowApp.js"></script>
+    <script src="/js/controllers/user.js"></script>
     <!--SCRIPTS END-->
   </body>
 </html>
