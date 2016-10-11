@@ -8,7 +8,10 @@
 module.exports = {
 
   attributes: {
-  	username:{
+  	name:{
+  		type:'string'
+  	},
+  	email:{
   		type:'string'
   	},
   	password:{
@@ -17,6 +20,25 @@ module.exports = {
   	owner:{
   		model:'userGroup'
   	}
+  },
+  signup: function (inputs, cb) {
+    // Create a user
+    User.create({
+      name: inputs.name,
+      email: inputs.email,
+      // TODO: But encrypt the password first
+      password: inputs.password
+    })
+    .exec(cb);
+  },  
+  attemptLogin: function (inputs, cb) {
+    // Create a user
+    User.findOne({
+      email: inputs.email,
+      // TODO: But encrypt the password first
+      password: inputs.password
+    })
+    .exec(cb);
   }
 };
 
