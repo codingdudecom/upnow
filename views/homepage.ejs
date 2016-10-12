@@ -9,7 +9,15 @@ setTimeout(function sunrise () {
   document.getElementsByClassName('header')[0].style.backgroundColor = '#118798';
 }, 0);
 </script>
-
+<ul class="container">
+  <li class="nav navbar-nav navbar-right">
+    <% if (req.session.me) {%>
+    Log out
+    <% } else { %>
+    Log in
+    <% }%>
+  </li>
+</ul>
 <div class="default-page">
   <div class="header">
     <h1 id="main-title" class="container"><%= __('A brand new app.') %></h1>

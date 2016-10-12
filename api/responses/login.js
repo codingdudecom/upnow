@@ -41,6 +41,7 @@ module.exports = function login(inputs) {
     // send a 200 response letting the user agent know the login was successful.
     // (also do this if no `successRedirect` was provided)
     if (req.wantsJSON || !inputs.successRedirect) {
+      res.header('Location',inputs.successRedirect);
       return res.ok();
     }
 
