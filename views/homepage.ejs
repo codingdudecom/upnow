@@ -7,7 +7,7 @@
     font-weight: bold;
     font-size:32px;
     line-height: 1em;
-    text-shadow: 1px 1px 0px white,2px 2px 0px black;    
+    /*text-shadow: 1px 1px 0px white,2px 2px 0px black;    */
   }
 
   .navbar-default .navbar-brand{
@@ -26,7 +26,7 @@
         <span class="sr-only">Toggle navigation</span>
         <i class="icon-menu"></i> Menu
         </button>
-        <a class="navbar-brand logo" href="/">up now?</a>
+        <a class="navbar-brand logo" href="/">UP now?</a>
       </div>
       <!-- end logo-->
 
@@ -35,6 +35,9 @@
         <ul class="nav navbar-nav navbar-right">
           
             <% if (req.session.me) {%>
+            <li>
+              <a href=""><%= req.session.me.name %></a>
+            </li>
             <li>
               <a href="/logout">Log out</a>
             </li>
@@ -55,21 +58,84 @@
   </nav>
 
 
-
+<div ng-controller="HomeCtrl">
   <!-- page head -->
-<div class="jumbotron" style="background-color: #45B3B8;background-image: url('/images/bg.png');color: white;">
-  <div class="container-fluid text-center">
-  <h1>Is your site <strong>up now</strong>?</h1>
-  <p>Real time monitoring for websites</p>
-  <div class="row">
-    <div class="input-group-lg col-md-4 col-md-offset-4" style="display:table;">
-      <input type="text" style="display: table-cell;border-bottom-right-radius: 0;border-top-right-radius: 0;" class="form-control" placeholder="http://yourwebsite.com">
-      <span class="input-group-btn">
-        <button class="btn btn-primary" type="button">Check!</button>
-      </span>
+  <div class="jumbotron" style="padding:125px 0;background-color: #45B3B8;background-image: url('/images/bg.png');color: white;background-color:#4CAF50;">
+    <div class="container-fluid text-center">
+      <h1>Is your site <strong>up now</strong>?</h1>
+      <p>Real time monitoring for websites.<br/>Input your website address and see the status of your website</p>
+      <div class="row">
+        <form name="form" ng-submit="vm.check()">
+          <div class="input-group-lg col-md-4 col-md-offset-4" style="display:table;" >
+              <input type="url" style="display: table-cell;border-bottom-right-radius: 0;border-top-right-radius: 0;" class="form-control" placeholder="http://yourwebsite.com" ng-model="vm.site">
+              <span class="input-group-btn">
+                <button class="btn btn-info" type="submit" ng-disabled="form.$invalid || vm.dataLoading">Check!</button>
+              </span>
+            
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-  
-</div>
-
   <!-- end page head -->
+
+  <!-- page content -->
+
+  <div class="container">
+    <div class="row padding" ng-if="sites.length > 0">
+      <div class="col-md-8 col-md-offset-2">
+        <div class="table-responsive">
+          <table class="table table-condensed" >
+            <thead> 
+              <tr> 
+                <th>#</th> 
+                <th>URL</th>
+                <th>Response time</th>
+                <th>Status</th>
+              </tr> 
+            </thead>
+            <tbody>
+              <tr ng-repeat="s in sites">
+                <td>{{$index+1}}</td>
+                <td>{{s.url}}</td>
+                <td>{{s.responseTime}}ms</td>
+                <td><span ng-class="{'label-success':s.statusCode==200, 'label-danger':s.statusCode!=200}" class="label">{{s.statusCode}} {{s.statusMessage}}</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <a href="/signup" class="btn btn-success pull-right">Start monitoring</a>
+        </div>
+      </div>
+    </div>
+    <div class="row padding">
+      <div class="col-md-4">
+        <h1>Real time monitoring</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </div>
+      <div class="col-md-4">
+        <h1>Email and mobile alerts</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </div>
+      <div class="col-md-4">
+        <h1>Easy to use and free</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </div> 
+    </div>
+  </div>
+  <!-- end page content-->
+</div>

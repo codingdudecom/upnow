@@ -43,6 +43,9 @@ module.exports.routes = {
   'post /login': 'UserController.login',
   'post /signup': 'UserController.signup',
 
+
+  '/:site':'HomepageController.checkUpNow'
+
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *
