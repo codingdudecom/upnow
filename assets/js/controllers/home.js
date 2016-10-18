@@ -4,7 +4,7 @@ upnowApp.controller('HomeCtrl',function($scope, $http, $window){
 		check : function(){
 			this.dataLoading = true;
 			$http
-				.get('/'+encodeURIComponent(this.site))
+				.get('/checkStatus/'+encodeURIComponent(this.site))
 				.then(function(res){
 					// alert(JSON.stringify(res));
 					$scope.vm.dataLoading = false;

@@ -40,11 +40,14 @@ module.exports.routes = {
   'get /logout': 'UserController.logout',
   'get /signup': { view: 'user/signup' },
 
+  // 'get /sites': 'SiteController',
+  // 'post /sites': 'SiteController.addSite',
+
   'post /login': 'UserController.login',
   'post /signup': 'UserController.signup',
 
 
-  '/:site':'HomepageController.checkUpNow'
+  '/checkStatus/:site':'HomepageController.checkUpNow'
 
   /***************************************************************************
   *                                                                          *

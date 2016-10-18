@@ -27,7 +27,8 @@ module.exports = {
       name: inputs.name,
       email: inputs.email,
       // TODO: But encrypt the password first
-      password: inputs.password
+      password: inputs.password,
+      owner: inputs.owner
     })
     .exec(cb);
   },  

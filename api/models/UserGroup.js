@@ -19,6 +19,13 @@ module.exports = {
   		collection:'site',
   		via:'owner'
   	}
+  },
+  signup: function (inputs, cb) {
+    // Create a user
+    User.create({
+      name: inputs.name
+    })
+    .exec(cb);
   }
 };
 
