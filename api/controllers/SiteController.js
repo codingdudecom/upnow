@@ -12,11 +12,11 @@ module.exports = {
 			.find({owner:user.owner})
 			.exec(function(err,sites){
 				if (err) return res.negotiate(err);
-				if (req.wantsJSON) return res.json(sites);
-				return res.view('site/index');
+				// if (req.wantsJSON) 
+				// return res.json(sites);
+				// return res.view('site/index');
+				res.ok(sites);
 			});
-		
-		
 	},
 
 	create: function(req,res){
@@ -29,12 +29,8 @@ module.exports = {
 	    })
 	    .exec(function(err, site){
 			if (err) return res.negotiate(err);
-			return res.json(site);
+			return res.create(site);
 	    });		
-	},
-
-	findOne:function(req,res){
-		return res.view({});
 	}
 };
 

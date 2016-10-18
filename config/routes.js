@@ -40,8 +40,7 @@ module.exports.routes = {
   'get /logout': 'UserController.logout',
   'get /signup': { view: 'user/signup' },
 
-  // 'get /sites': 'SiteController',
-  // 'post /sites': 'SiteController.addSite',
+  'get /app': 'AppController',
 
   'post /login': 'UserController.login',
   'post /signup': 'UserController.signup',
