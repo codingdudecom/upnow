@@ -29,7 +29,7 @@ module.exports = {
 	    })
 	    .exec(function(err, site){
 			if (err) return res.negotiate(err);
-			return res.create(site);
+			return res.created(site);
 	    });		
 	}
 };

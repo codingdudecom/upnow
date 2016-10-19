@@ -1,34 +1,12 @@
-<div class="jumbotron" ng-controller="SiteCtrl">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
+<div ng-controller="SiteCtrl" class="container-fluid padding">
 
-				<h2>Sites</h2>
-				<div class="table-responsive">
-				<table class="table table-condensed" >
-					<thead> 
-					<tr> 
-					<th>#</th> 
-					<th>URL</th>
-					<th>Response time</th>
-					<th>Status</th>
-					</tr> 
-					</thead>
-					<tbody>
-						
-							<tr ng-repeat="site in vm.sites">
-							<td>{{$index+1}}</td>
-							<td><a href="/site#/{{site.id}}">{{site.url}}</a></td>
-							<td><button class="btn btn-link" ng-click="vm.deleteSite(site)">delete</button></td>
-							<td><!-- <span ng-class="{'label-success':s.statusCode==200, 'label-danger':s.statusCode!=200}" class="label">{{s.statusCode}} {{s.statusMessage}}</span> --></td>
-							</tr>
-						
-					</tbody>
-				</table>
-				</div>
+	
+		<div class="row" ng-hide="vm.sites && vm.sites.length>0">
+			<div class="col-md-12">
+				<h2 class="text-muted text-center">No sites yet. Start adding sites to monitor uptime</h2>
 			</div>
-		</div>	
-		<div class="row" >
+		</div>
+		<div class="row">
 	 		<form name="form" ng-submit="vm.add()">
 	          <div class="input-group-lg col-md-4 col-md-offset-4" style="display:table;" >
 	              <input type="url" style="display: table-cell;border-bottom-right-radius: 0;border-top-right-radius: 0;" class="form-control" placeholder="http://yourwebsite.com" ng-model="vm.site.url">
@@ -38,6 +16,45 @@
 	            
 	          </div>
 	        </form>			
+		</div>
+	
+
+	
+	
+
+
+		<div class="row" ng-if="vm.sites && vm.sites.length>0">
+			<div class="col-md-12">
+
+				<h2>Sites</h2>
+				<div class="table-responsive">
+				<table class="table table-condensed" >
+					<thead> 
+					<tr> 
+
+					<th>URL</th>
+					
+					<th>Status</th>
+					<th>Avg. response time</th>
+					</tr> 
+					</thead>
+					<tbody>
+						
+							<tr ng-repeat="site in vm.sites">
+							
+							<td>
+								<a href="/site#/{{site.id}}">{{site.url}}</a><button class="btn btn-link" ng-click="vm.deleteSite(site)"><span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span></button>								
+								<p class="text-muted">Last check: {{site.lastCheck | date :'medium'}}</p>
+							</td>
+							
+							<td><!-- <span ng-class="{'label-success':s.statusCode==200, 'label-danger':s.statusCode!=200}" class="label">{{s.statusCode}} {{s.statusMessage}}</span> --></td>
+							<td></td>
+							</tr>
+						
+					</tbody>
+				</table>
+				</div>
+			</div>
 		</div>	
-	</div>
+
 </div>

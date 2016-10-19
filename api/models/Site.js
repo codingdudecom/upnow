@@ -11,6 +11,21 @@ module.exports = {
   	url:{
   		type:'string'
   	},
+  	lastCheck:{
+  		type:'datetime',
+  		defaultsTo:function(){
+  			return new Date();
+  		}
+  	},
+  	lastStatusCode:{
+  		type:'integer'
+  	},
+  	lastStatusMessage:{
+  		type:'string'
+  	},
+  	avgResponseTime:{
+  		type:'integer'
+  	},
 
   	owner:{
   		model:'userGroup'

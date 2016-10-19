@@ -49,5 +49,6 @@ module.exports.policies = {
 		// feed : ['isNiceToAnimals', 'hasRabbitFood']
 	// }
 
-  SiteController:'sessionAuth'
+  SiteController:'sessionAuth',
+  AppController:'sessionAuth'
 };
