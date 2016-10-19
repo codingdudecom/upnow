@@ -22,15 +22,30 @@ module.exports = {
 	create: function(req,res){
 		var url = req.param("url");
 		var user = req.session.me;
+
+		var startTime = new Date();
+
+		WebsiteCheckerService.checkSite(url,
+			function(data){
+				Site.create({
+					url: url,
+					owner: user.owner,
+					avgResponseTime: new Date().getTime() - startTime,
+					lastStatusCode: data.statusCode,
+					lastStatusMessage: data.statusMessage
+				})
+				.exec(function(err, site){
+				if (err) return res.negotiate(err);
+					return res.json(site);
+				});						
+			  	
+			},
+			function(err){
+			  return res.serverError(err);
+			}
+		);	
 		
-	    Site.create({
-	      url: url,
-	      owner:user.owner
-	    })
-	    .exec(function(err, site){
-			if (err) return res.negotiate(err);
-			return res.created(site);
-	    });		
+	    
 	}
 };
 

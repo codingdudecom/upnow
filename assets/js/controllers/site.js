@@ -6,7 +6,6 @@ upnowApp.controller('SiteCtrl',function($scope, $http, $window){
 			$http
 				.put('/site/create',this.site)
 				.then(function(res){
-					// alert(JSON.stringify(res));
 					$scope.vm.dataLoading = false;
 					console.log(res.data);
 					$scope.vm.sites.push(res.data);
@@ -14,10 +13,14 @@ upnowApp.controller('SiteCtrl',function($scope, $http, $window){
 		},
 		deleteSite:function(site){
 			$http
-				.delete('site/'+site.id)
+				.delete('/site/'+site.id)
 				.then(function(res){
-					var idx = $scope.vm.sites.indexOf(res.data);
-					$scope.vm.sites.splice(idx,1);
+					angular.forEach($scope.vm.sites,function(s,idx){
+						if (s.id == site.id){
+							$scope.vm.sites.splice(idx,1);
+							return;
+						}
+					});
 				});
 		},
 		loadSites : function(){
