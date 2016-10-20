@@ -1,4 +1,4 @@
-var upnowApp = angular.module('upnowApp',['ngRoute']);
+var upnowApp = angular.module('upnowApp',['ngRoute','ui.bootstrap']);
 
 upnowApp.config(function($routeProvider) {
   $routeProvider
