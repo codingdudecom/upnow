@@ -8,6 +8,7 @@
 		</div>
 		<div class="row">
 	 		<form name="form" ng-submit="vm.add()">
+	 		  <div uib-alert ng-repeat="alert in vm.alerts" class="col-md-4 col-md-offset-4" ng-class="'alert-' + (alert.type || 'warning')" close="vm.closeAlert($index)" dismiss-on-timeout="2000">{{alert.msg}}</div>
 	          <div class="input-group-lg col-md-4 col-md-offset-4" style="display:table;" >
 	              <input type="url" style="display: table-cell;border-bottom-right-radius: 0;border-top-right-radius: 0;" class="form-control" placeholder="http://yourwebsite.com" ng-model="vm.site.url">
 	              <span class="input-group-btn">
@@ -28,27 +29,31 @@
 
 				<h2>Sites</h2>
 				<div class="table-responsive">
-				<table class="table table-condensed" >
+				<table class="table table-condensed table-striped" >
 					<thead> 
 					<tr> 
-
+					<th width="10"></th>
 					<th>URL</th>
 					
 					<th>Status</th>
 					<th>Avg. response time</th>
+					
 					</tr> 
 					</thead>
 					<tbody>
 						
 							<tr ng-repeat="site in vm.sites">
-							
-							<td>
-								<a class="lead" href="/site#/{{site.id}}">{{site.url}}</a><button class="btn btn-link" ng-click="vm.deleteSite(site)"><span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span></button>								
-								<p class="text-muted">Last check: {{site.lastCheck | date :'medium'}}</p>
-							</td>
-							
-							<td><span ng-class="{'label-success':site.lastStatusCode==200, 'label-danger':site.lastStatusCode!=200}" class="label">{{site.lastStatusCode}} {{site.lastStatusMessage}}</span></td>
-							<td>{{site.avgResponseTime}} ms</td>
+								<td><button class="btn btn-link" ng-click="vm.deleteSite(site)"><span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span></button></td>
+								<td>
+									<address>
+									<a class="lead" href ng-click="vm.editSite(site)">{{site.url}}</a>
+									<p class="text-muted">Last check: {{site.lastCheck | date :'medium'}}</p>
+									</address>
+								</td>
+								
+								<td><p class="lead"><span ng-class="{'label-success':site.lastStatusCode==200, 'label-danger':site.lastStatusCode!=200}" class="label">{{site.lastStatusCode}} {{site.lastStatusMessage}}</span></p></td>
+								<td>{{site.avgResponseTime}} ms</td>
+
 							</tr>
 						
 					</tbody>

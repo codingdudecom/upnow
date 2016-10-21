@@ -1,0 +1,11 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Delete site?</h3>
+</div>
+<div class="modal-body" id="modal-body">
+   <p>Are you sure you want to delete <em>{{site}}</em> from your monitoring list?</p>
+   <p>This action cannot be undone</p>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ok()" ng-disabled="deleting">Delete <span class="glyphicon glyphicon-cog spinning" ng-if="deleting"></span></button>
+    <button class="btn btn-default" type="button" ng-click="cancel('c')">Cancel</button>
+</div>
