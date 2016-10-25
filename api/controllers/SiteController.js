@@ -44,8 +44,35 @@ module.exports = {
 			  return res.serverError(err);
 			}
 		);	
-		
-	    
+	},
+
+	findOne: function(req,res){
+		console.log(req.param('id'));
+		var user = req.session.me;
+		Site
+			.findOne({id:req.param('id'),owner:user.owner})
+			.exec(function(err,sites){
+				if (err) return res.negotiate(err);
+				// if (req.wantsJSON) 
+				// return res.json(sites);
+				// return res.view('site/index');
+				res.ok(sites);
+			});		
+	},
+	update: function(req,res){
+
+	},
+	destroy: function(req,res){
+		var user = req.session.me;
+		Site
+			.destroy({id:req.param('id'),owner:user.owner})
+			.exec(function(err,sites){
+				if (err) return res.negotiate(err);
+				// if (req.wantsJSON) 
+				// return res.json(sites);
+				// return res.view('site/index');
+				res.ok(sites);
+			});	
 	}
 };
 

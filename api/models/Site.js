@@ -29,6 +29,10 @@ module.exports = {
     alertEmails:{
       type:'array'
     },
+    checkInterval:{
+      type:'integer',
+      defaultsTo:15
+    },
 
   	owner:{
   		model:'userGroup'

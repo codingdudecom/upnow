@@ -6,6 +6,9 @@
  */
 
 module.exports = {
+  _config: {
+    rest: false
+  },  
   login: function (req, res) {
 
     // See `api/responses/login.js`

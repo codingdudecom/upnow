@@ -38,11 +38,15 @@ upnowApp.controller('SiteCtrl',function($scope, $http, $window, $timeout, $uibMo
 		},
 		editSite:function(site){
 			var sites = $scope.vm.sites;
+
 			var modal = $uibModal.open(
 				{
 					templateUrl:'/templates/site/edit.html',
 					controller:function($scope, $uibModalInstance){
 						$scope.site = site.url;
+						$scope.alertEmails = site.alertEmails || [];
+						$scope.checkInterval = site.checkInterval;
+
 						$scope.freqSettings = [
 							{text:"Every 5 minutes",value:5},
 							{text:"Every 10 minutes",value:10},
@@ -52,8 +56,17 @@ upnowApp.controller('SiteCtrl',function($scope, $http, $window, $timeout, $uibMo
 							{text:"Every hour",value:60},
 						];
 
-
-
+						angular.forEach($scope.freqSettings,function(el){
+							if (el.value == $scope.checkInterval){
+								$scope.freq = el;
+								return;
+							}
+						});
+						$scope.addEmail = function(){
+							if ($scope.alertEmails.indexOf($scope.email) < 0){
+								$scope.alertEmails.push($scope.email);
+							}
+						}
 						$scope.ok = function(){
 						
 						}
