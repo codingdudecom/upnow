@@ -44,7 +44,7 @@ upnowApp.controller('SiteCtrl',function($scope, $http, $window, $timeout, $uibMo
 					templateUrl:'/templates/site/edit.html',
 					controller:function($scope, $uibModalInstance){
 						$scope.site = site.url;
-						$scope.alertEmails = site.alertEmails || [];
+						$scope.alertEmails = angular.copy(site.alertEmails) || [];
 						$scope.checkInterval = site.checkInterval;
 
 						$scope.freqSettings = [
@@ -67,11 +67,34 @@ upnowApp.controller('SiteCtrl',function($scope, $http, $window, $timeout, $uibMo
 								$scope.alertEmails.push($scope.email);
 							}
 						}
+						$scope.deleteAlertEmail = function(alertEmail){
+							if (confirm("Remove "+alertEmail+" from the alert list?")){
+								var idx = $scope.alertEmails.indexOf(alertEmail);
+								if (idx >= 0){
+									$scope.alertEmails.splice(idx,1);
+								}
+							}
+						}
 						$scope.ok = function(){
-						
+							site.alertEmails = $scope.alertEmails;
+							site.checkInterval = $scope.freq.value;
+							$scope.saving = true;
+							$http
+								.post('/site/'+site.id,site)
+								.then(
+									function(res){
+										$scope.saving = false;
+										
+									},
+									function(res){
+										$scope.saving = false;
+										
+									}
+								);
 						}
 						$scope.cancel = function(){
 							$uibModalInstance.dismiss();
+							console.log(site);
 						}
 					}
 				}

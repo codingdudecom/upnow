@@ -4,6 +4,7 @@
  * @description :: Server-side logic for managing sites
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
+var _update = require('sails/lib/hooks/blueprints/actions/update');
 
 module.exports = {
 	index:function(req,res){
@@ -32,7 +33,8 @@ module.exports = {
 					owner: user.owner,
 					avgResponseTime: new Date().getTime() - startTime,
 					lastStatusCode: data.statusCode,
-					lastStatusMessage: data.statusMessage
+					lastStatusMessage: data.statusMessage,
+					alertEmails:[user.email]
 				})
 				.exec(function(err, site){
 				if (err) return res.negotiate(err);
@@ -59,8 +61,18 @@ module.exports = {
 				res.ok(sites);
 			});		
 	},
-	update: function(req,res){
+	update: function(req,res,next){
+		console.log(next);
+		var user = req.session.me;
+		Site
+			.findOne({id:req.param('id'),owner:user.owner})
+			.exec(function(err,site){
 
+				if (err) return res.negotiate(err);
+				
+
+				_update(req,res);
+			});
 	},
 	destroy: function(req,res){
 		var user = req.session.me;
