@@ -9,6 +9,9 @@ var _create = require('sails/lib/hooks/blueprints/actions/create');
 
 var schedule = require('node-schedule');
 
+var kue = require('kue')
+  , queue = kue.createQueue();
+
 module.exports = {
 	index:function(req,res){
 		var user = req.session.me;
@@ -47,22 +50,8 @@ module.exports = {
 					//console.log(site.checkInterval);
 
 					/*schedule job*/
-					var j = schedule.scheduleJob('*/30 * * * * *', function(){
-						var startTime = new Date().getTime();
-						WebsiteCheckerService.checkSite(site.url,function(data){
-							var delta = new Date().getTime() - startTime;
-							SiteLog.create(
-							{
-								statusCode:data.statusCode,
-	  							statusMessage:data.statusMessage,
-	  							responseTime:delta,
-	  							owner:site.id
-	  						})
-							.exec(function(err,siteLog){
-								// if (err) return res.negotiate(err);
-								// return res.json(site);
-							});
-						});
+					var j = schedule.scheduleJob('siteSchedule'+site.id,'*/30 * * * * *', function(){
+						Site.performCheck(site);
 					});					
 					/*end schedule job*/
 					

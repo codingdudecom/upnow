@@ -25,9 +25,9 @@ module.exports = {
       		siteReq.on('error',function(siteResponse){
       			done({
       				site: site,
-    				responseTime: new Date().getTime() - startTime,
-    				statusCode:siteResponse.statusCode,
-    				statusMessage:siteResponse.statusCode?siteResponse.statusMessage:"DNS Not Found"
+      				responseTime: new Date().getTime() - startTime,
+      				statusCode:siteResponse.statusCode,
+      				statusMessage:siteResponse.statusCode?siteResponse.statusMessage:"DNS Not Found"
       			});
       		});
       		siteReq.end();    	    

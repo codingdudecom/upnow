@@ -19,39 +19,23 @@ var schedule = require('node-schedule');
 
      // Run when sails loads-- be sure and call `next()`.
      initialize: function (next) {
-		Site
-			.find({})
-			.exec(function(err,sites){
-				if (err) return throw err;
-				
-				angular.forEach(sites,function(site,idx){
-					/*schedule job*/
-					var j = schedule.scheduleJob('*/30 * * * * *', function(){
-						var startTime = new Date().getTime();
-						WebsiteCheckerService.checkSite(site.url,function(data){
-							var delta = new Date().getTime() - startTime;
-							SiteLog.create(
-							{
-								statusCode:data.statusCode,
-	  							statusMessage:data.statusMessage,
-	  							responseTime:delta,
-	  							owner:site.id
-	  						})
-							.exec(function(err,siteLog){
-								// if (err) return res.negotiate(err);
-								// return res.json(site);
-							});
+     	sails.on('hook:orm:loaded', function() {
+
+			Site
+				.find({})
+				.exec(function(err,sites){
+					if (err) throw new Exception(err);
+					
+					sites.forEach(function(site,idx){
+						/*schedule job*/
+						var j = schedule.scheduleJob('siteSchedule'+site.id,'*/30 * * * * *', function(){
+							Site.performCheck(site);
 						});
-					});					
-					/*end schedule job*/					
+						/*end schedule job*/					
+					});
+					return next();
 				});
-				return next();
-			});
-		// Object.keys(sails.config.crontab).forEach(function(key) {
-		// var val = sails.config.crontab[key];
-		// schedule.scheduleJob(key, val);
-		// });
-        
+		});
      }
  };
 };
