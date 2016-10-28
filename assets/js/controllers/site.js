@@ -87,8 +87,7 @@ upnowApp.controller('SiteCtrl',function($scope, $http, $window, $timeout, $uibMo
 										
 									},
 									function(res){
-										$scope.saving = false;
-										
+										$scope.saving = false;										
 									}
 								);
 						}
