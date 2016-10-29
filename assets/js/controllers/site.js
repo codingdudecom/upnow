@@ -46,6 +46,11 @@ upnowApp.controller('SiteCtrl',function($scope, $http, $window, $timeout, $uibMo
 						$scope.site = site.url;
 						$scope.alertEmails = angular.copy(site.alertEmails) || [];
 						$scope.checkInterval = site.checkInterval;
+						$scope.alerts = [];
+
+						$scope.closeAlert = function(index){
+							$scope.alerts.splice(index,1);
+						};
 
 						$scope.freqSettings = [
 							{text:"Every 5 minutes",value:5},
@@ -84,10 +89,11 @@ upnowApp.controller('SiteCtrl',function($scope, $http, $window, $timeout, $uibMo
 								.then(
 									function(res){
 										$scope.saving = false;
-										
+										$scope.alerts.push({type:'success',msg:"Site settings saved"});
 									},
 									function(res){
-										$scope.saving = false;										
+										$scope.saving = false;
+										$scope.alerts.push({type:'danger',msg:"There was an error while trying to save"});								
 									}
 								);
 						}

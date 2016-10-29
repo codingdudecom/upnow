@@ -2,11 +2,17 @@ var http = require('follow-redirects').http;
 var https = require('follow-redirects').https;
 
 module.exports = {
+  cron:function(everyXMins){
+    console.log("cron for every "+everyXMins);
+    // return '*/'+everyXMins+' * * * *';
+    return '*/30 * * * * *';
+  },
 	checkSite:function(site,done,err){
     if (this.validURL(site)){
       		var options = this.parseURL(site);
       		options.method = "HEAD";
       		options.maxRedirects = 3;
+          options.timeout = 10000;
     		
     		var startTime = new Date().getTime();
     		

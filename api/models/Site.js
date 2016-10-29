@@ -56,7 +56,7 @@ module.exports = {
           .exec(function(err,avg){
             if (err) throw JSON.stringify(err);
 
-            console.log(site.url +" : "+avg[0].responseTime);
+            // console.log(site.url +" : "+avg[0].responseTime);
 
             site.avgResponseTime = parseInt(avg[0].responseTime);
             Site

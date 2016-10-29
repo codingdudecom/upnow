@@ -3,6 +3,7 @@
  * https://www.npmjs.org/package/node-schedule
  */
 
+
 module.exports = function (sails) {
 
 /**
@@ -28,7 +29,7 @@ var schedule = require('node-schedule');
 					
 					sites.forEach(function(site,idx){
 						/*schedule job*/
-						var j = schedule.scheduleJob('siteSchedule'+site.id,'*/30 * * * * *', function(){
+						var j = schedule.scheduleJob('siteSchedule'+site.id,WebsiteCheckerService.cron(site.checkInterval), function(){
 							Site.performCheck(site);
 						});
 						/*end schedule job*/					

@@ -9,8 +9,6 @@ var _create = require('sails/lib/hooks/blueprints/actions/create');
 
 var schedule = require('node-schedule');
 
-var kue = require('kue')
-  , queue = kue.createQueue();
 
 module.exports = {
 	index:function(req,res){
@@ -50,7 +48,7 @@ module.exports = {
 					//console.log(site.checkInterval);
 
 					/*schedule job*/
-					var j = schedule.scheduleJob('siteSchedule'+site.id,'*/30 * * * * *', function(){
+					var j = schedule.scheduleJob('siteSchedule'+site.id,WebsiteCheckerService.cron(site.checkInterval), function(){
 						Site.performCheck(site);
 					});					
 					/*end schedule job*/
@@ -96,7 +94,19 @@ module.exports = {
 			.exec(function(err,site){
 
 				if (err) return res.negotiate(err);
+
+				/*re-schedule job*/
+				var prevJob = schedule.scheduledJobs['siteSchedule'+site.id];
 				
+				if (prevJob){
+					console.log("found previous job; canceling for reschedule");
+					prevJob.cancel();
+				}
+				var j = schedule.scheduleJob('siteSchedule'+site.id,WebsiteCheckerService.cron(req.body.checkInterval), function(){
+					Site.performCheck(site);
+				});					
+				/*end re-schedule job*/				
+				console.log(req.body);
 				_update(req,res);
 			});
 	},
@@ -106,10 +116,23 @@ module.exports = {
 			.destroy({id:req.param('id'),owner:user.owner})
 			.exec(function(err,sites){
 				if (err) return res.negotiate(err);
-				// if (req.wantsJSON) 
-				// return res.json(sites);
-				// return res.view('site/index');
-				res.ok(sites);
+				/*un-schedule job*/
+				var prevJob = schedule.scheduledJobs['siteSchedule'+sites[0].id];
+				
+				if (prevJob){
+					console.log("found previous job; canceling due to deletion "+sites[0].url);
+					prevJob.cancel();
+				}
+				/*end un-schedule job*/
+
+				SiteLog
+					.destroy({owner:sites[0].id})
+					.exec(function(err,siteLogs){
+						if (err) return res.negotiate(err);
+
+						return res.ok(sites);
+					});
+				
 			});	
 	}
 };
