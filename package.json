@@ -5,6 +5,7 @@
   "description": "a Sails application",
   "keywords": [],
   "dependencies": {
+    "aws-sdk": "^2.6.12",
     "ejs": "2.3.4",
     "follow-redirects": "^0.2.0",
     "grunt": "1.0.1",
@@ -20,7 +21,10 @@
     "grunt-sails-linker": "~0.10.1",
     "grunt-sync": "0.5.2",
     "include-all": "^1.0.0",
+    "mailcomposer": "^3.12.0",
     "node-schedule": "^1.2.0",
+    "node-ses": "^2.0.1",
+    "nodemailer": "^2.6.4",
     "rc": "1.0.1",
     "sails": "~0.12.7",
     "sails-disk": "~0.10.9",

@@ -47,6 +47,7 @@ module.exports = {
 					if (err) return res.negotiate(err);
 					//console.log(site.checkInterval);
 
+
 					/*schedule job*/
 					var j = schedule.scheduleJob('siteSchedule'+site.id,WebsiteCheckerService.cron(site.checkInterval), function(){
 						Site.performCheck(site);
