@@ -41,7 +41,12 @@
         font-weight: bold;
         font-size:32px;
         line-height: 1em;
+        padding:5px;
         /*text-shadow: 1px 1px 0px white,2px 2px 0px black;    */
+      }
+
+      .logo img{
+        max-height: 40px;
       }
 
       .navbar-default .navbar-brand{
@@ -63,7 +68,7 @@
         <span class="sr-only">Toggle navigation</span>
         <i class="icon-menu"></i> Menu
         </button>
-        <a class="navbar-brand logo" href="/">UP now?</a>
+        <a class="navbar-brand logo" href="/"><img src="/images/upnow-logo-small.png" alt="UpNOW logo"/></a>
       </div>
       <!-- end logo-->
 
@@ -72,19 +77,17 @@
         <ul class="nav navbar-nav navbar">
           <% if (req.session.me) {%>
             <li>
-              <a href="/sites">Sites</a>
-            </li>
-            <li>
-              <a href="/sites">Users</a>
+              <a href="/app/#/">Sites</a>
             </li>
           <% } %>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           
             <% if (req.session.me) {%>
-            <li>
-              <a href=""><%= req.session.me.name %></a>
-            </li>
+            <li class="dropdown">
+               <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= req.session.me.name %> </a>
+                
+            </li>          
             <li>
               <a href="/logout">Log out</a>
             </li>
@@ -163,6 +166,7 @@
     <script src="/bower_components/angular/angular.js"></script>
     <script src="/bower_components/angular-route/angular-route.js"></script>
     <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="/js/upnowApp.js"></script>
     <script src="/js/controllers/home.js"></script>
     <script src="/js/controllers/site.js"></script>

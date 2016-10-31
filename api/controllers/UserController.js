@@ -53,15 +53,31 @@ module.exports = {
         // or `res.serverError()` accordingly.
         if (err) return res.negotiate(err);
 
-        // Go ahead and log this user in as well.
-        // We do this by "remembering" the user in the session.
-        // Subsequent requests from this user agent will have `req.session.me` set.
-        req.session.me = user;
+
+        /*send activation email*/
+        EmailService.sendEmail(
+          {
+            to:user.email,
+            message:'Hi,<br/><br/>Thank you for registering UpNOW, real time monitoring for your websites.<br/><br/>In order to start website monitoring please activate your account by clicking <a href="'
+            +ConfigService.getServerURL(req)+'/user/activateAccount?c='+user.activationCode
+            +'">this link</a>.',
+            subject:'UpNOW account activation'
+          },
+          function(success){
+            console.log(success);
+          },
+          function(err){
+            console.log(err);
+          }
+        );
+        /*end send activation email*/
 
         // If this is not an HTML-wanting browser, e.g. AJAX/sockets/cURL/etc.,
         // send a 200 response letting the user agent know the signup was successful.
         if (req.wantsJSON) {
           res.header('Location','/login');
+          req.flash('message','Registration successful! Please check your email account for the activation link');
+          req.flash('message-type','success');
           return res.ok('Signup successful!');
         }
 
@@ -81,6 +97,27 @@ module.exports = {
       }
     );
 
-  }    	
+  },
+  activateAccount:function(req,res){
+
+    User.activateAccount({
+      activationCode:req.param("c")
+    },function(err,user){
+      if (err) return res.negotiate(err);
+
+      // req.flash('message','account activated');
+      // req.flash('message-type','success');
+      // req.flash('email',user[0].email);
+      // return res.redirect('/login');
+
+      // Go ahead and log this user in as well.
+      // We do this by "remembering" the user in the session.
+      // Subsequent requests from this user agent will have `req.session.me` set.
+      req.session.me = user[0];
+      req.session.authenticated = true;
+
+      return res.redirect('/app/');
+    });
+  }
 };
 

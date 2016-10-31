@@ -32,7 +32,7 @@ var jsFilesToInject = [
   '/bower_components/angular/angular.js',
   '/bower_components/angular-route/angular-route.js',
   '/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
-  '/bower_components/bootstrap/dist/js/boostrap.js',
+  '/bower_components/bootstrap/dist/js/bootstrap.js',
 
   //load before other JS files
   '/js/upnowApp.js',

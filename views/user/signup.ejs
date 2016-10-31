@@ -2,6 +2,11 @@
     <div class="container">
 		<div class="col-md-6 col-md-offset-3">
 		    <h2>Signup</h2>
+            <div class="alert alert-danger" role="alert" ng-show="vm.error">
+              <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+              <span class="sr-only">Error:</span>
+              {{vm.error}}
+            </div>		    
 		    <form name="form" ng-submit="vm.signup()" role="form">
 		        <div class="form-group" ng-class="{ 'has-error': form.name.$dirty && form.name.$error.required }">
 		            <label for="name">Full name</label>
@@ -18,8 +23,13 @@
 		            <input type="password" name="password" id="password" class="form-control" ng-model="vm.user.password" required />
 		            <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
 		        </div>
+		        <div class="form-group" ng-class="{ 'has-error': form.confirm_password.$dirty && (form.confirm_password.$error.required || vm.user.password != vm.confirm_password) }">
+		            <label for="confirm_password">Confirm Password</label>
+		            <input type="password" name="confirm_password" id="confirm_password" class="form-control" ng-model="vm.confirm_password" required />
+		            <span ng-show="form.confirm_password.$dirty && (form.confirm_password.$error.required || vm.user.password != vm.confirm_password)" class="help-block">Passwords do not match</span>
+		        </div>		        
 		        <div class="form-actions">
-		            <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Signup</button>
+		            <button type="submit" ng-disabled="form.$invalid || vm.user.password != vm.confirm_password || vm.dataLoading" class="btn btn-primary">Signup</button>
 		            <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
 		            <a href="/login" class="btn btn-link">Cancel</a>
 		        </div>

@@ -18,10 +18,27 @@ module.exports = {
   	password:{
   		type:'string'
   	},
+    active:{
+      type:'boolean',
+      defaultsTo:false
+    },
+    activationCode:{
+      type:'string',
+      defaultsTo:function(){
+        function s4() {
+          return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+        }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+          s4() + '-' + s4() + s4() + s4();        
+      }
+    },
   	owner:{
   		model:'userGroup'
   	}
-  },
+
+  }, 
   signup: function (inputs, cb) {
     // Create a user
     User.create({
@@ -34,13 +51,31 @@ module.exports = {
     .exec(cb);
   },  
   attemptLogin: function (inputs, cb) {
-    // Create a user
+
     User.findOne({
       email: inputs.email,
       // TODO: But encrypt the password first
-      password: inputs.password
+      password: inputs.password,
+      active:true
     })
     .exec(cb);
+  },
+  activateAccount: function(inputs,cb){
+    
+    User.findOne({
+      activationCode:inputs.activationCode
+    })
+    .exec(function(err,user){
+      if (err) return cb(err);
+
+      if (!user) return cb("Account not found or already activated");
+
+      user.activationCode = null;
+      user.active = true;
+      User
+        .update(user.id,user)
+        .exec(cb);
+    });
   }
 };
 

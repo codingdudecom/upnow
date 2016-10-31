@@ -8,10 +8,14 @@
               {{vm.error}}
             </div>
             
+            <div ng-init="msg = '<%= req.flash('message') %>'" class="alert alert-<%= req.flash('message-type') %>" role="alert" ng-show="msg != ''">
+              {{msg}}
+            </div>
+            
             <form name="form" ng-submit="vm.login()" role="form">
                 <div class="form-group" ng-class="{ 'has-error': form.email.$dirty && form.email.$error.required }">
                     <label for="email">Email</label>
-                    <input type="email" name="email" id="email" class="form-control" ng-model="vm.email" required />
+                    <input ng-init="vm.email = '<%- req.flash('email') %>'" type="email" name="email" id="email" class="form-control" ng-model="vm.email" required />
                     <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Email is required</span>
                 </div>
                 <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">

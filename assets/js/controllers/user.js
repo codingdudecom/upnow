@@ -16,6 +16,9 @@ upnowApp.controller('LoginCtrl',function($scope, $http, $window){
 				.post('/signup',this.user)
 				.then(function(res){
 					$window.location.href = res.headers("Location");
+				},
+				function(res){
+					$scope.vm.error = res.data.message;
 				});
 		}
 	};
