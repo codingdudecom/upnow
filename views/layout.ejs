@@ -31,6 +31,7 @@
     <!--STYLES-->
     <link rel="stylesheet" href="/styles/importer.css">
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.css">
     <!--STYLES END-->
 
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600' rel='stylesheet' type='text/css'>
@@ -64,7 +65,7 @@
     <div class="container">
       <!-- logo -->
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <button aria-controls="main-menu" aria-expanded=false type="button" class="collapsed navbar-toggle" data-toggle="collapse" data-target="#main-menu">         
         <span class="sr-only">Toggle navigation</span>
         <i class="icon-menu"></i> Menu
         </button>
@@ -73,24 +74,29 @@
       <!-- end logo-->
 
       <!-- login/logut links -->
-      <div class="collapse navbar-collapse">
-        <ul class="nav navbar-nav navbar">
-          <% if (req.session.me) {%>
-            <li>
-              <a href="/app/#/">Sites</a>
-            </li>
-          <% } %>
-        </ul>
+      <div id="main-menu" class="collapse navbar-collapse">
+
         <ul class="nav navbar-nav navbar-right">
           
             <% if (req.session.me) {%>
-            <li class="dropdown">
-               <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= req.session.me.name %> </a>
-                
-            </li>          
-            <li>
-              <a href="/logout">Log out</a>
-            </li>
+
+
+
+    <li class="btn-group navbar-dropdown" uib-dropdown>
+      <button id="split-button" type="button" class="btn btn-primary"><i class="glyphicon glyphicon-user"></i> <%= req.session.me.name %></button>
+      <button type="button" class="btn btn-primary" uib-dropdown-toggle>
+        <span class="caret"></span>
+        <span class="sr-only">Split button!</span>
+      </button>
+      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button">
+        <li role="menuitem"><a href="/app/#/">Dashboard</a></li>
+        <li role="menuitem"><a href="/app/#/sites">Manage Sites</a></li>
+        <li class="divider"></li>
+        <li role="menuitem"><a href="/logout">Log out</a></li>
+      </ul>
+    </li>
+
+
             <% } else { %>
             <li>
               <a href="/login">Log in</a>
