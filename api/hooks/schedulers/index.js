@@ -34,8 +34,10 @@ var schedule = require('node-schedule');
 						});
 						/*end schedule job*/					
 					});
-					return next();
+					
 				});
+
+			return next();
 		});
      }
  };
