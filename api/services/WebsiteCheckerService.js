@@ -5,8 +5,8 @@ var url = require('url');
 module.exports = {
   cron:function(everyXMins){
     console.log("cron for every "+everyXMins);
-    // return '*/'+everyXMins+' * * * *';
-    return '*/30 * * * * *';
+    return '*/'+everyXMins+' * * * *';
+    // return '*/30 * * * * *';
   },
 	checkSite:function(site,done,err){
     if (this.validURL(site)){
