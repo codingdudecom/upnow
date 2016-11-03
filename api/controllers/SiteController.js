@@ -59,7 +59,8 @@ module.exports = {
 							statusCode:data.statusCode,
   							statusMessage:data.statusMessage,
   							responseTime:respTime,
-  							owner:site.id
+  							owner:site.id,
+  							checkInterval:site.checkInterval
   						})
 					.exec(function(err,siteLog){
 						if (err) return res.negotiate(err);

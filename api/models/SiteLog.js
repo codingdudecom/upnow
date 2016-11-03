@@ -17,6 +17,10 @@ module.exports = {
   	responseTime:{
   		type:'integer'
   	},
+    checkInterval:{
+      type:'integer',
+      defaultsTo:15
+    },    
   	owner:{
   		model:'Site'
   	}  	

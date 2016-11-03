@@ -87,33 +87,36 @@ module.exports = {
       // });
       /*end send email alerts*/      
 
-
-      SiteLog.create(
-      {
-          statusCode:data.statusCode,
-          statusMessage:data.statusMessage,
-          responseTime:delta,
-          owner:site.id
-      })
-      .exec(function(err,siteLog){
-        SiteLog
-          .find({owner:siteLog.owner})
-          .average("responseTime")
-          .exec(function(err,avg){
-            if (err) throw JSON.stringify(err);
-
-            // console.log(site.url +" : "+avg[0].responseTime);
-
-            site.avgResponseTime = parseInt(avg[0].responseTime);
-            site.lastStatusMessage = data.statusMessage;
-            site.lastStatusCode = data.statusCode;
-            Site
-              .update(siteLog.owner,site)
-              .exec(function(err,sites){
+      Site
+        .findOne(site.id)
+        .exec(function(err,site){
+          SiteLog.create(
+          {
+              statusCode:data.statusCode,
+              statusMessage:data.statusMessage,
+              responseTime:delta,
+              owner:site.id,
+              checkInterval:site.checkInterval
+          })
+          .exec(function(err,siteLog){
+            SiteLog
+              .find({owner:siteLog.owner})
+              .average("responseTime")
+              .exec(function(err,avg){
                 if (err) throw JSON.stringify(err);
 
-                next && next();
+                site.avgResponseTime = parseInt(avg[0].responseTime);
+                site.lastStatusMessage = data.statusMessage;
+                site.lastStatusCode = data.statusCode;
+                Site
+                  .update(siteLog.owner,site)
+                  .exec(function(err,sites){
+                    if (err) throw JSON.stringify(err);
+
+                    next && next();
+                  });
               });
+              
           });
       });
     });  
