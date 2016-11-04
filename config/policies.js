@@ -50,5 +50,6 @@ module.exports.policies = {
 	// }
 
   SiteController:'sessionAuth',
+  SiteLogController:'sessionAuth',
   AppController:'sessionAuth'
 };
