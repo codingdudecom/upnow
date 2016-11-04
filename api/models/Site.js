@@ -105,7 +105,9 @@ module.exports = {
               .exec(function(err,avg){
                 if (err) throw JSON.stringify(err);
 
-                site.avgResponseTime = parseInt(avg[0].responseTime);
+                if (data.statusCode == 200){
+                  site.avgResponseTime = parseInt(avg[0].responseTime);
+                }
                 site.lastStatusMessage = data.statusMessage;
                 site.lastStatusCode = data.statusCode;
                 Site

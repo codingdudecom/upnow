@@ -10,4 +10,11 @@ upnowApp.config(function($routeProvider) {
   })
   .when("/site/:id", {templateUrl : "/templates/site/detail.html"})
   .otherwise("/");
+})
+
+
+.controller("AppCtrl",function($scope, $location){
+	$scope.isActive = function(view){
+		return view === $location.path();
+	}
 });
