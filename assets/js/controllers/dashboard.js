@@ -10,16 +10,73 @@ upnowApp
 	$scope.series = [];
 
 	$scope.datasetOverride = [];
+
+	
 	var chartOptions =
 		{
 			lineTension: 0.1,
-			fill:false
+			fill:false,
+			borderWidth:1,
+			pointRadius:2,
+			pointHoverRadius:2,
+			pointHoverBorderWidth:0,
+			pointStyle:'rect'
 		};
+
+	$scope.options = {
+        responsive:true,
+        maintainAspectRatio:false,
+        legend:{
+        	display:true
+        },
+		scales:{
+			xAxes:[
+				{	
+					type:'time',
+					time: {
+	                    displayFormats: {
+	                        hour: 'hA'
+	                    }
+	                },
+	                ticks:{
+	                	maxRotation:0,
+	                	maxTicksLimit:5
+	                }
+            	}
+			],
+			yAxes:[
+				{
+					scaleLabel:{
+						labelString:'Avg response time (ms)',
+						display:true
+					},
+					ticks:{
+						callback:function(value){
+							return value/1000 + " s";
+						}
+					}			
+				}
+			]
+		}        
+
+	};
+
+	$scope.pieOptions = {
+		cutoutPercentage:80,
+		circumference:4 * Math.PI/3,
+		rotation: -Math.PI/2 - 2 * Math.PI/3
+
+	}
 
 	$scope.sites = [];
 	$scope.siteUpCount = 0;
 	$scope.siteDownCount = 0;
 
+
+	var last24h = new Date();
+	last24h = new Date(last24h.getTime() - 24 * 3600 * 1000);
+
+	$scope.uptimes = {};
   $scope.load = function(){
   	$http.get('/siteLog')
 	  	.then(function(res){
@@ -35,7 +92,13 @@ upnowApp
 
 	  		var groupFn = toMin;
 
+	  		
+
 	  		angular.forEach(res.data,function(el,idx){
+
+	  			if (new Date(el.createdAt).getTime() > last24h.getTime()){
+		  			return;
+		  		}
 
 	  			if ($scope.series.indexOf(el.owner.url) < 0){
 	  				$scope.series.push(el.owner.url);
@@ -65,7 +128,7 @@ upnowApp
 				var timeIndex = $scope.labels.indexOf(groupFn(dt).getTime());
 
 				if ($scope.data[siteIndex][timeIndex] ){
-		  			$scope.data[siteIndex][timeIndex] = ($scope.data[siteIndex][timeIndex] + el.responseTime)/2;
+		  			$scope.data[siteIndex][timeIndex] = Math.round(($scope.data[siteIndex][timeIndex] + el.responseTime)/2);
 		  		} else {
 		  			$scope.data[siteIndex][timeIndex] = el.responseTime;
 		  		}
@@ -75,7 +138,29 @@ upnowApp
 				$scope.labels[idx] = $filter('date')(new Date(el), 'short');
 			});
 
-				  		
+	  		angular.forEach(res.data,function(el){
+	  			if (!$scope.uptimes[el.owner.url]){
+	  				$scope.uptimes[el.owner.url] = {
+	  					data:[0,0],
+	  					labels:["Up","Down"]
+	  				};
+	  			}
+				
+				var downTime = el.checkInterval;
+	  			if (el.statusCode != 200){
+	  				//DOWN
+	  				$scope.uptimes[el.owner.url].data[1] += downTime;
+	  			} else {
+	  				//UP
+					$scope.uptimes[el.owner.url].data[0] += downTime;
+					$scope.uptimes[el.owner.url].value = 100 * $scope.uptimes[el.owner.url].data[0] / ($scope.uptimes[el.owner.url].data[0] + $scope.uptimes[el.owner.url].data[1]);
+	  			}
+	  		});
+
+			angular.forEach(res.data,function(el){
+
+			});
+
 	  	});
 
 	$http.get('/site')
@@ -95,7 +180,30 @@ upnowApp
 	  			}
 	  		});
 	  	});
+
+	
+	
   }
 
   $scope.load();
-});
+})
+
+.filter('percent',function(){
+	return function(input, decimals){
+		var integerPart = Math.floor(input);
+		var decimalPart = (input - integerPart).toFixed(decimals);
+		return "<span class='integerPart'>"+integerPart+"</span><span class='decimalPart'>."+decimalPart+"</span>";
+	};
+})
+.directive('asPercent', function() {
+  return {
+    restrict: 'AE',
+    template:"<span class='integerPart'>{{integerPart}}</span><span class='decimalPart'>.{{decimalPart}}%</span>",
+    link: function (scope, el, attrs) {
+    	var input = attrs.number;
+		scope.integerPart = Math.floor(input);
+		scope.decimalPart = (""+(input - scope.integerPart).toFixed(4)).split(".")[1];
+    }
+  };
+})
+;

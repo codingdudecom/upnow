@@ -16,6 +16,8 @@ var MailComposer = require("mailcomposer").MailComposer;
 
 module.exports = {
 	sendEmail:function(data, done, err){
+        // done("Test mode email: "+data.message);
+        // return;
 		data.from = data.from || "UpNOW <upnow@coding-dude.com>";
 		var mail = new MailComposer(
             {
