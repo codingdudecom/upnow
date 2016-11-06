@@ -96,7 +96,7 @@ upnowApp
 
 	  		angular.forEach(res.data,function(el,idx){
 
-	  			if (new Date(el.createdAt).getTime() > last24h.getTime()){
+	  			if (new Date(el.createdAt).getTime() < last24h.getTime()){
 		  			return;
 		  		}
 
