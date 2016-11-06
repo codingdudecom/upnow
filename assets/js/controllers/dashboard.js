@@ -126,12 +126,13 @@ upnowApp
 				var siteIndex = $scope.series.indexOf(el.owner.url);
 
 				var timeIndex = $scope.labels.indexOf(groupFn(dt).getTime());
-
-				if ($scope.data[siteIndex][timeIndex] ){
-		  			$scope.data[siteIndex][timeIndex] = Math.round(($scope.data[siteIndex][timeIndex] + el.responseTime)/2);
-		  		} else {
-		  			$scope.data[siteIndex][timeIndex] = el.responseTime;
-		  		}
+				if (timeIndex > 0){
+					if ($scope.data[siteIndex][timeIndex] ){
+			  			$scope.data[siteIndex][timeIndex] = Math.round(($scope.data[siteIndex][timeIndex] + el.responseTime)/2);
+			  		} else {
+			  			$scope.data[siteIndex][timeIndex] = el.responseTime;
+			  		}
+			  	}
 			});
 
 			angular.forEach($scope.labels,function(el,idx){
