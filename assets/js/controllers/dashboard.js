@@ -64,8 +64,17 @@ upnowApp
 	$scope.pieOptions = {
 		cutoutPercentage:80,
 		circumference:4 * Math.PI/3,
-		rotation: -Math.PI/2 - 2 * Math.PI/3
+		rotation: -Math.PI/2 - 2 * Math.PI/3,
+		tooltips:{
+			callbacks:{
+				label:function(tooltipItem,data){
 
+					return "Up Time: "
+					 +(100 * data.datasets[0].data[0] / (data.datasets[0].data[0] + data.datasets[0].data[1])).toFixed(4)+"%"
+					;
+				}
+			}
+		}
 	}
 
 	$scope.sites = [];
@@ -90,7 +99,7 @@ upnowApp
 	  			return new Date(dt.getFullYear(),dt.getMonth(),dt.getDay(),dt.getHours(),dt.getMinutes());
 	  		}
 
-	  		var groupFn = toMin;
+	  		var groupFn = toHour;
 
 	  		
 
@@ -158,9 +167,7 @@ upnowApp
 	  			}
 	  		});
 
-			angular.forEach(res.data,function(el){
-
-			});
+	  		$scope.siteLogLoaded = true;
 
 	  	});
 
@@ -180,6 +187,8 @@ upnowApp
 					$scope.siteUpCount++;
 	  			}
 	  		});
+
+	  		$scope.siteLoaded = true;
 	  	});
 
 	
