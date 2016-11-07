@@ -16,9 +16,9 @@ upnowApp
 		{
 			lineTension: 0.1,
 			fill:false,
-			borderWidth:1,
-			pointRadius:2,
-			pointHoverRadius:2,
+			borderWidth:2,
+			pointRadius:4,
+			pointHoverRadius:4,
 			pointHoverBorderWidth:0,
 			pointStyle:'rect'
 		};
