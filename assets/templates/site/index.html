@@ -34,7 +34,6 @@
 					<tr> 
 					<th width="10"></th>
 					<th>URL</th>
-					
 					<th>Status</th>
 					<th>Avg. response time</th>
 					
@@ -47,12 +46,17 @@
 								<td>
 									<address>
 									<a class="lead" href ng-click="vm.editSite(site)">{{site.url}}</a>
-									<p class="text-muted">Last check: {{site.lastCheck | date :'medium'}}</p>
+									<p class="text-muted">
+										<i class="fa fa-calendar-check-o"></i> Last check: {{site.lastCheck | date :'medium'}}<br/>
+										<i class="fa fa-clock-o"></i> Checking every {{site.checkInterval}} mins
+									</p>
 									</address>
 								</td>
 								
 								<td><p class="lead"><span ng-class="{'label-success':site.lastStatusCode==200, 'label-danger':site.lastStatusCode!=200}" class="label">{{site.lastStatusCode}} {{site.lastStatusMessage}}</span></p></td>
-								<td>{{site.avgResponseTime}} ms</td>
+								<td>
+									<p class="text-muted">{{site.avgResponseTime}} ms</p>
+								</td>
 
 							</tr>
 						
