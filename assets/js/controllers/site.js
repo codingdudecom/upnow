@@ -42,7 +42,7 @@ upnowApp.controller('SiteCtrl',['$scope', '$http', '$window', '$timeout', '$uibM
 			var modal = $uibModal.open(
 				{
 					templateUrl:'/templates/site/edit.html',
-					controller:function($scope, $uibModalInstance){
+					controller:['$scope', '$uibModalInstance',function($scope, $uibModalInstance){
 						$scope.site = site.url;
 						$scope.alertEmails = angular.copy(site.alertEmails) || [];
 						$scope.checkInterval = site.checkInterval;
@@ -101,7 +101,7 @@ upnowApp.controller('SiteCtrl',['$scope', '$http', '$window', '$timeout', '$uibM
 							$uibModalInstance.dismiss();
 							console.log(site);
 						}
-					}
+					}]
 				}
 			);
 		},
@@ -110,7 +110,7 @@ upnowApp.controller('SiteCtrl',['$scope', '$http', '$window', '$timeout', '$uibM
 			var modal = $uibModal.open(
 				{
 					templateUrl:'/templates/site/confirmDeleteSite.html',
-					controller:function($scope, $uibModalInstance){
+					controller:['$scope', '$uibModalInstance',function($scope, $uibModalInstance){
 						$scope.site = site.url;
 
 						$scope.ok = function(){
@@ -132,7 +132,7 @@ upnowApp.controller('SiteCtrl',['$scope', '$http', '$window', '$timeout', '$uibM
 						$scope.cancel = function(){
 							$uibModalInstance.dismiss();
 						}
-					}
+					}]
 				}
 			);
 
