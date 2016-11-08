@@ -1,5 +1,5 @@
 upnowApp.controller('SiteCtrl',function($scope, $http, $window, $timeout, $uibModal){
-	// $scope.sites = [];
+	
 	$scope.vm={
 		alerts : [],
 		add : function(){

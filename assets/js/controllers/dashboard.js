@@ -1,9 +1,6 @@
 upnowApp
 .controller('DashboardCtrl',function($scope, $http, $window, $location, $filter){
 
-	// $scope.labels = ["luni","marti","miercuri"];
-	// $scope.data = [[300, 500, 100],[100, 100, 300]];
-	// $scope.series = ["site 1","site 2"];
 
 	$scope.labels = [];
 	$scope.data = [];
