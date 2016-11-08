@@ -1,4 +1,4 @@
-upnowApp.controller('HomeCtrl',function($scope, $http, $window){
+upnowApp.controller('HomeCtrl',['$scope', '$http', '$window',function($scope, $http, $window){
 	$scope.sites = [];
 	$scope.vm={
 		check : function(){
@@ -20,4 +20,4 @@ upnowApp.controller('HomeCtrl',function($scope, $http, $window){
 				});
 		}
 	};
-});
+}]);

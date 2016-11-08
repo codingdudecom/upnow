@@ -1,4 +1,4 @@
-upnowApp.controller('SiteCtrl',function($scope, $http, $window, $timeout, $uibModal){
+upnowApp.controller('SiteCtrl',['$scope', '$http', '$window', '$timeout', '$uibModal',function($scope, $http, $window, $timeout, $uibModal){
 	
 	$scope.vm={
 		alerts : [],
@@ -156,4 +156,4 @@ upnowApp.controller('SiteCtrl',function($scope, $http, $window, $timeout, $uibMo
 	};
 
 	$scope.vm.loadSites();
-});
+}]);

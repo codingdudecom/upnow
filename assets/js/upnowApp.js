@@ -1,6 +1,6 @@
 var upnowApp = angular.module('upnowApp',['ngRoute','ui.bootstrap','chart.js']);
 
-upnowApp.config(function($routeProvider) {
+upnowApp.config(['$routeProvider', function($routeProvider) {
   $routeProvider
   .when("/", {
     templateUrl : "/templates/dashboard.html"
@@ -10,11 +10,11 @@ upnowApp.config(function($routeProvider) {
   })
   .when("/site/:id", {templateUrl : "/templates/site/detail.html"})
   .otherwise("/");
-})
+}])
 
 
-.controller("AppCtrl",function($scope, $location){
+.controller("AppCtrl",['$scope', '$location',function($scope, $location){
 	$scope.isActive = function(view){
 		return view === $location.path();
 	}
-});
+}]);

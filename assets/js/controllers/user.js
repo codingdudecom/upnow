@@ -1,4 +1,4 @@
-upnowApp.controller('LoginCtrl',function($scope, $http, $window){
+upnowApp.controller('LoginCtrl',['$scope', '$http', '$window',function($scope, $http, $window){
 	$scope.vm={
 		login : function(){
 			$http
@@ -22,4 +22,4 @@ upnowApp.controller('LoginCtrl',function($scope, $http, $window){
 				});
 		}
 	};
-});
+}]);

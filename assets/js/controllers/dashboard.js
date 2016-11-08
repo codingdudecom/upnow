@@ -1,5 +1,5 @@
 upnowApp
-.controller('DashboardCtrl',function($scope, $http, $window, $location, $filter){
+.controller('DashboardCtrl',['$scope', '$http', '$window', '$location', '$filter',function($scope, $http, $window, $location, $filter){
 
 
 	$scope.labels = [];
@@ -193,7 +193,7 @@ upnowApp
   }
 
   $scope.load();
-})
+}])
 
 .filter('percent',function(){
 	return function(input, decimals){
