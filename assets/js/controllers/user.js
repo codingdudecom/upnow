@@ -22,4 +22,30 @@ upnowApp.controller('LoginCtrl',['$scope', '$http', '$window',function($scope, $
 				});
 		}
 	};
+}])
+
+.controller('ProfileCtrl',['$scope','$http','$window',function($scope,$http,$window){
+	$scope.vm = {};
+	$scope.load = function(){
+		$http
+			.get('/me')
+			.then(
+				function(res){
+					delete res.data.password;
+					$scope.vm.user = res.data;
+				}
+			);
+	};
+	$scope.save = function(){
+		$http
+			.post('/me',$scope.vm.user)
+			.then(
+				function(res){
+					$window.location.reload();
+				}
+			);
+	};
+
+
+	$scope.load();
 }]);

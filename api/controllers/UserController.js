@@ -118,6 +118,47 @@ module.exports = {
 
       return res.redirect('/app/');
     });
+  },
+  me:function(req,res){
+    if (req.session.me){
+      if (req.method == "GET"){
+        //return current user
+        return res.ok(req.session.me);
+      } else if (req.method == "POST"){
+        User
+          .findOne(req.session.me.id)
+          .exec(function(err,user){
+              if (err) req.negotiate(err);
+
+              var userData = {
+                name:req.body.name,
+                email:req.body.email
+              };
+
+              console.log(req.body);
+
+              if (req.body.password){
+                userData.password = req.body.password
+              };
+
+              
+
+              User
+                .update(
+                  {id:req.session.me.id},
+                  userData
+                )
+                .exec(function(err,user){
+                  if (err) return res.negotiate(err);
+                  req.session.me = user[0];
+                  return res.ok(user[0]);
+                });
+              
+          });
+      }
+    } else {
+      return res.forbidden("Not logged in");
+    }
   }
 };
 

@@ -45,6 +45,8 @@ module.exports.routes = {
   'post /login': 'UserController.login',
   'post /signup': 'UserController.signup',
 
+  'get /me': 'UserController.me',
+  'post /me': 'UserController.me',
 
   '/checkStatus/:site':'HomepageController.checkUpNow'
 

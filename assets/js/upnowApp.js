@@ -8,6 +8,9 @@ upnowApp.config(['$routeProvider', function($routeProvider) {
   .when("/sites", {
     templateUrl : "/templates/site/index.html"
   })
+  .when("/profile", {
+    templateUrl : "/templates/user/profile.html"
+  })  
   .when("/site/:id", {templateUrl : "/templates/site/detail.html"})
   .otherwise("/");
 }])
