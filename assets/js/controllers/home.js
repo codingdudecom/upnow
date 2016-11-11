@@ -16,7 +16,12 @@ upnowApp.controller('HomeCtrl',['$scope', '$http', '$window',function($scope, $h
 							responseTime:res.data.responseTime
 
 						}
-					)
+					);
+					window.scroll({
+					  top: 230, 
+					  left: 0, 
+					  behavior: 'smooth' 
+					});
 				});
 		}
 	};

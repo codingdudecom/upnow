@@ -36,6 +36,7 @@ var jsFilesToInject = [
   // '/bower_components/bootstrap/dist/js/bootstrap.js',
   '/bower_components/chart.js/dist/Chart.bundle.js',
   '/bower_components/angular-chart.js/dist/angular-chart.js',
+  '/bower_components/smoothscroll/dist/smoothscroll.js',
 
   //load before other JS files
   '/js/upnowApp.js',

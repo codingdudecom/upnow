@@ -21,6 +21,7 @@
     "angular-route": "^1.5.8",
     "ui-bootstrap": "^2.2.0",
     "font-awesome": "font-awsome#^4.7.0",
-    "angular-chart.js": "^1.0.3"
+    "angular-chart.js": "^1.0.3",
+    "smoothscroll": "^0.3.4"
   }
 }
