@@ -1,4 +1,4 @@
-var upnowApp = angular.module('upnowApp',['ngRoute','ui.bootstrap','chart.js']);
+var upnowApp = angular.module('upnowApp',['ngRoute','ui.bootstrap','chart.js','angular-web-notification']);
 
 upnowApp.config(['$routeProvider', function($routeProvider) {
   $routeProvider

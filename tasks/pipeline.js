@@ -37,6 +37,8 @@ var jsFilesToInject = [
   '/bower_components/chart.js/dist/Chart.bundle.js',
   '/bower_components/angular-chart.js/dist/angular-chart.js',
   '/bower_components/smoothscroll/dist/smoothscroll.js',
+  '/bower_components/html5-desktop-notifications/dist/Notification.js',
+  '/bower_components/angular-web-notification/angular-web-notification.js',
 
   //load before other JS files
   '/js/upnowApp.js',

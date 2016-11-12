@@ -22,6 +22,7 @@
     "ui-bootstrap": "^2.2.0",
     "font-awesome": "font-awsome#^4.7.0",
     "angular-chart.js": "^1.0.3",
-    "smoothscroll": "^0.3.4"
+    "smoothscroll": "^0.3.4",
+    "angular-web-notification": "^1.0.16"
   }
 }

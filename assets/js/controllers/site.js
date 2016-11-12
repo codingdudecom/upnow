@@ -29,6 +29,8 @@ upnowApp.controller('SiteCtrl',['$scope', '$http', '$window', '$timeout', '$uibM
 						$scope.vm.sites.push(res.data);
 						$scope.vm.alert({type:'success',msg:that.site.url+" added"});
 						$scope.vm.site = {};
+
+						$scope.vm.editSite(res.data);
 					},
 					function(res){
 						$scope.vm.dataLoading = false;
