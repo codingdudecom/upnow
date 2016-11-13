@@ -1,3 +1,3 @@
-# upnow
+# UpNOW - Website uptime monitoring
 
-a [Sails](http://sailsjs.org) application
+UpNOW is the Sails application behind [UpNOW.info](http://www.upnow.info)

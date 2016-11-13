@@ -8,10 +8,19 @@
 module.exports = {
 	index:function(req,res){
 		var user = req.session.me;
+		var timeWindow = req.param("timeWindow")?parseInt(req.param("timeWindow")):(24*3600*1000);
 		SiteLog
-			.find()
+			.find(
+				{
+					where:{
+						createdAt:{
+							'>=':new Date((new Date()).getTime() - timeWindow)
+						}
+					}
+				}
+			)
 			.sort('id')
-			.populate('owner',{})
+			.populate('owner')
 			.exec(function(err,siteLogs){
 				if (err) return res.negotiate(err);
 				var filteredSiteLogs = [];
@@ -20,7 +29,7 @@ module.exports = {
 						filteredSiteLogs.push(el);	
 					}					
 				});
-				res.ok(filteredSiteLogs);
+				return res.ok(filteredSiteLogs);
 			});
 	}
 };

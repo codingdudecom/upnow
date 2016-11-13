@@ -86,14 +86,15 @@ upnowApp
   $scope.load = function(){
   	$http.get('/siteLog')
 	  	.then(function(res){
+	  		console.log(res.data.length);
 		  	var minDate = new Date(), maxDate = new Date(0);
 
 	  		function toHour(dt){
-	  			return new Date(dt.getFullYear(),dt.getMonth(),dt.getDay(),dt.getHours());
+	  			return new Date(dt.getFullYear(),dt.getMonth()+1,dt.getDate(),dt.getHours());
 	  		}
 
 	  		function toMin(dt){
-	  			return new Date(dt.getFullYear(),dt.getMonth(),dt.getDay(),dt.getHours(),dt.getMinutes());
+	  			return new Date(dt.getFullYear(),dt.getMonth()+1,dt.getDate(),dt.getHours(),dt.getMinutes());
 	  		}
 
 	  		var groupFn = toHour;
@@ -101,10 +102,6 @@ upnowApp
 	  		
 
 	  		angular.forEach(res.data,function(el,idx){
-
-	  			if (new Date(el.createdAt).getTime() < last24h.getTime()){
-		  			return;
-		  		}
 
 	  			if ($scope.series.indexOf(el.owner.url) < 0){
 	  				$scope.series.push(el.owner.url);
@@ -119,6 +116,7 @@ upnowApp
 	  		});
 
 			angular.forEach(res.data,function(el,idx){
+				
 	  				angular.forEach(
 	  					$scope.data,
 	  					function(data){
@@ -128,7 +126,9 @@ upnowApp
 			});
 
 			angular.forEach(res.data,function(el){
+		
 				var dt = new Date(el.createdAt);
+				console.log(groupFn(dt));
 				var siteIndex = $scope.series.indexOf(el.owner.url);
 
 				var timeIndex = $scope.labels.indexOf(groupFn(dt).getTime());
@@ -145,28 +145,35 @@ upnowApp
 				$scope.labels[idx] = $filter('date')(new Date(el), 'short');
 			});
 
-	  		angular.forEach(res.data,function(el){
-	  			if (!$scope.uptimes[el.owner.url]){
-	  				$scope.uptimes[el.owner.url] = {
-	  					data:[0,0],
-	  					labels:["Up","Down"]
-	  				};
-	  			}
-				
-				var downTime = el.checkInterval;
-	  			if (el.statusCode != 200){
-	  				//DOWN
-	  				$scope.uptimes[el.owner.url].data[1] += downTime;
-	  			} else {
-	  				//UP
-					$scope.uptimes[el.owner.url].data[0] += downTime;
-					$scope.uptimes[el.owner.url].value = 100 * $scope.uptimes[el.owner.url].data[0] / ($scope.uptimes[el.owner.url].data[0] + $scope.uptimes[el.owner.url].data[1]);
-	  			}
-	  		});
 
-	  		$scope.siteLogLoaded = true;
+
+	  		$scope.responseTimesLoaded = true;
 
 	  	});
+
+		$http.get('/siteLog?timeWindow='+30*24*3600*1000)
+	  		.then(function(res){
+				console.log(res.data.length);
+		  		angular.forEach(res.data,function(el){
+		  			if (!$scope.uptimes[el.owner.url]){
+		  				$scope.uptimes[el.owner.url] = {
+		  					data:[0,0],
+		  					labels:["Up","Down"]
+		  				};
+		  			}
+					
+					var downTime = el.checkInterval;
+		  			if (el.statusCode != 200){
+		  				//DOWN
+		  				$scope.uptimes[el.owner.url].data[1] += downTime;
+		  			} else {
+		  				//UP
+						$scope.uptimes[el.owner.url].data[0] += downTime;
+						$scope.uptimes[el.owner.url].value = 100 * $scope.uptimes[el.owner.url].data[0] / ($scope.uptimes[el.owner.url].data[0] + $scope.uptimes[el.owner.url].data[1]);
+		  			}
+		  		});
+		  		$scope.uptimesLoaded = true;		
+	  		});
 
 	$http.get('/site')
 	  	.then(function(res){
