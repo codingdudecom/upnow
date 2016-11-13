@@ -10,7 +10,7 @@ module.exports = {
 		var user = req.session.me;
 		SiteLog
 			.find()
-			.sort('createdAt')
+			.sort('id')
 			.populate('owner',{})
 			.exec(function(err,siteLogs){
 				if (err) return res.negotiate(err);
